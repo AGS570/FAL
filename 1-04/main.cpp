@@ -9,27 +9,62 @@
 
 using namespace std;
 
+
+bool subida(vector<int>v,int ini, int fin){
+    for(int i = ini; i < fin-1; i++){
+        if(v[i] >= v[i+1])return false;
+    }
+    return true;
+}
+
+bool valido(vector<int> &v, int ini,int fin, int d){
+    int cont =0;
+    int in,f;
+    for(int i = ini; i < fin-1;i++ ){
+        if(subida(v,i,fin)&& fin - i > d)return false;
+        
+    }
+    return true;
+}
 // función que resuelve el problema
-TipoSolucion resolver(TipoDatos datos) {
-    
-    
+int resolver(vector<int> &v, int d) {
+    int max =0;
+    int cont =0;
+    int ini,fin;
+    ini=0;
+    fin= ini;
+    for(int i =0; i < v.size();i++){
+        if(ini < 0) return max;
+        if(valido(v,ini,fin+1,d)){
+            fin++;
+            
+        }else{
+            ini++;
+        }
+        cont = fin - ini;
+
+       if(cont > max) max = cont;
+
+    }
+    return max;
 }
 
 // Resuelve un caso de prueba, leyendo de la entrada la
 // configuración, y escribiendo la respuesta
-bool resuelveCaso() {
+void resuelveCaso() {
     // leer los datos de la entrada
-    
-    if (! std::cin)
-        return false;
-    
-    TipoSolucion sol = resolver(datos);
-    
+    vector<int>v;
+    int d,n,in;
+    cin >> n >> d;
+    for(int i =0; i < n; i++){
+        cin >> in;
+        v.push_back(in);
+    }
+
+    int sol = resolver(v,d);
     // escribir sol
     
-    
-    return true;
-    
+    cout << sol<< endl;
 }
 
 int main() {
@@ -41,8 +76,10 @@ int main() {
      #endif 
     
     
-    while (resuelveCaso())
-        ;
+    int numCasos;
+    std::cin >> numCasos;
+    for (int i = 0; i < numCasos; ++i)
+        resuelveCaso();
 
     
     // Para restablecer entrada. Comentar para acepta el reto
