@@ -9,6 +9,7 @@
 
 using namespace std;
 
+// llano= (0<ini<fin | ^ (Ak(v[ini] = v[k] < v[fin])))
 bool llano(vector<int> &v, int ini,int fin){
     for(int i = ini; i < fin-1;i++){
         if(v[i] != v[i+1] ) return false;
@@ -17,17 +18,32 @@ bool llano(vector<int> &v, int ini,int fin){
     return false;
 }
 
-// función que resuelve el problema
+
+//P = {|datos| > 0 < c}
+//Q = {Ei | (0<=i ^ i+c < |datos| ^ llano(datos,i,i+c))}
+//coste = O(N)
 bool resolver(vector<int> &datos, int c) {
-    if(datos.size()<= c || c<1)return false;
-    int ini,fin;
-    for(int i =0; i+c < datos.size();i++){
-        
-        if(llano(datos,i,i+c)) return true;
+
+    //if(datos.size()<= c || c<1)return false;
+
+    int ini, fin, longitud=1;
+    ini =1;
+    for(int i =0; i+1 < datos.size();i++ ){
+        if(datos[i] == datos[i+1]){
+            longitud++;
+        }else {;
+            if(longitud >= c && datos[i] < datos[i+1])
+                return true;
+            longitud = 1;
+        }
     }
     return false;
-    
 }
+    /*int ini,fin;
+    for(int i =0; i+c < datos.size();Si++){
+        
+        if(llano(datos,i,i+c)) return true;
+    }*/
 
 // Resuelve un caso de prueba, leyendo de la entrada la
 // configuración, y escribiendo la respuesta
