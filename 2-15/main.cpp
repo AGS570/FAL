@@ -6,12 +6,21 @@
 #include <iomanip>
 #include <fstream>
 #include <vector>
+#include <string>
 
 using namespace std;
 
 // función que resuelve el problema
-TipoSolucion resolver(TipoDatos datos) {
-    
+char resolver(string &datos, int index, char m) {
+    if(index == datos.length()){
+        return m+1;
+    }
+
+    if(datos[index] - m  <= 1){
+        return resolver(datos,index +1 , datos[index]);
+    }else{
+        return m+1;
+    }
     
 }
 
@@ -20,10 +29,19 @@ TipoSolucion resolver(TipoDatos datos) {
 void resuelveCaso() {
     // leer los datos de la entrada
     
+    string datos,d;
+    char ini,fin, in;
+    cin >> ini >> fin;
+    in = ini;
+    for (int i = 0; i < fin-ini; ++i) {
+        cin >> in;
+        d.push_back(in);
+    }
     
-    TipoSolucion sol = resolver(datos);
+   
+    char sol = resolver(d,0, ini-1);
     // escribir sol
-    
+    cout  << sol <<endl;
     
 }
 
